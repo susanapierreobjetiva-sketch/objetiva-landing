@@ -973,3 +973,14 @@ nav a.active {
     padding: 48px 24px 70px;
   }
 }
+
+/* ---------- Overlay de prueba: oscurecer roca ---------- */
+
+.rock-col::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 35%, rgba(0, 0, 0, 0.55) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
