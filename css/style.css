@@ -882,6 +882,10 @@ nav a.active {
 
 .header-page {
   position: relative;
+  top: auto;
+  left: 0;
+  right: auto;
+  z-index: auto;
   background: #000000;
   padding: 28px 32px;
   max-width: 1180px;
