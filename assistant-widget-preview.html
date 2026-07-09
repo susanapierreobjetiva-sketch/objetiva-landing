@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Objetiva Broker — Preview asistente</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #000000;
+  --gold: #F0C987;
+  --gold-dark: #9C7434;
+  --text: #F1F1F0;
+  --radius: 3px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  background: #0a0a0b;
+  color: var(--text);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  min-height: 100vh;
+  position: relative;
+}
+.page-note {
+  padding: 60px 5.7%;
+  max-width: 640px;
+}
+.page-note h1 { font-size: 22px; font-weight: 600; margin-bottom: 12px; }
+.page-note p { font-size: 14px; color: rgba(241,241,240,0.55); line-height: 1.7; margin-bottom: 8px; }
+
+/* ---------- Asistente virtual (maqueta) ---------- */
+
+.assistant-widget {
+  position: fixed;
+  right: 32px;
+  bottom: 32px;
+  z-index: 50;
+}
+
+.assistant-toggle {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #1c1c1f 0%, #101012 70%);
+  border: 1.4px solid var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+  position: relative;
+  overflow: hidden;
+  padding: 0;
+}
+
+.assistant-toggle:hover {
+  transform: scale(1.05);
+  border-color: #fff;
+}
+
+.assistant-toggle img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 132%;
+  height: 132%;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+  display: block;
+}
+
+.assistant-toggle::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  box-shadow: inset 0 0 10px 3px rgba(0,0,0,0.55);
+  pointer-events: none;
+}
+
+.assistant-panel {
+  position: absolute;
+  right: 0;
+  bottom: 76px;
+  width: 320px;
+  background: var(--bg);
+  border: 1px solid rgba(240, 201, 135, 0.3);
+  border-radius: var(--radius);
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+
+.assistant-widget.open .assistant-panel {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.assistant-head {
+  padding: 18px 20px;
+  border-bottom: 1px solid rgba(240, 201, 135, 0.22);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.assistant-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1.2px solid var(--gold);
+  overflow: hidden;
+  flex: none;
+  position: relative;
+}
+
+.assistant-avatar img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 132%;
+  height: 132%;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+  display: block;
+}
+
+.assistant-head .name { font-size: 14px; font-weight: 600; color: var(--text); }
+.assistant-head .status { font-size: 11.5px; color: var(--gold); margin-top: 2px; }
+
+.assistant-body { padding: 18px 20px; min-height: 120px; }
+
+.assistant-msg {
+  background: #17171a;
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  font-size: 13px;
+  color: rgba(241, 241, 240, 0.75);
+  line-height: 1.6;
+  max-width: 90%;
+}
+
+.assistant-foot {
+  padding: 14px 16px;
+  border-top: 1px solid rgba(240, 201, 135, 0.22);
+}
+
+.assistant-foot input {
+  width: 100%;
+  background: #17171a;
+  border: 1px solid rgba(240, 201, 135, 0.2);
+  border-radius: var(--radius);
+  padding: 10px 12px;
+  color: var(--text);
+  font-size: 13px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.assistant-foot input::placeholder { color: rgba(241,241,240,0.35); }
+
+.label-tag {
+  position: fixed;
+  font-size: 11px;
+  color: rgba(241,241,240,0.4);
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
+.tag-closed { right: 32px; bottom: 100px; }
+</style>
+</head>
+<body>
+
+<div class="page-note">
+  <h1>Objetiva Broker — Asistente virtual (maqueta)</h1>
+  <p>Avatar: el emblema real de la marca (assets/img/emblema-objetiva.png), recortado en círculo con el mismo anillo dorado fino que .cat-icon en Seguros y una viñeta interior sutil para que se integre igual que sobre la roca del hero.</p>
+  <p>Haz clic en el botón inferior derecho para ver la transición cerrado → abierto.</p>
+</div>
+
+<span class="label-tag tag-closed">↓ estado cerrado</span>
+
+<div class="assistant-widget" id="assistantWidget">
+  <div class="assistant-panel">
+    <div class="assistant-head">
+      <div class="assistant-avatar">
+        <img src="assets/img/emblema-objetiva.png" alt="Objetiva Broker">
+      </div>
+      <div>
+        <div class="name">Asistente Objetiva</div>
+        <div class="status">Disponible ahora</div>
+      </div>
+    </div>
+    <div class="assistant-body">
+      <div class="assistant-msg">Hola, soy el asistente virtual de Objetiva Broker. ¿En qué puedo ayudarte con tu seguro?</div>
+    </div>
+    <div class="assistant-foot">
+      <input type="text" placeholder="Escribe tu consulta..." disabled>
+    </div>
+  </div>
+
+  <button class="assistant-toggle" aria-label="Abrir asistente" onclick="document.getElementById('assistantWidget').classList.toggle('open')">
+    <img src="assets/img/emblema-objetiva.png" alt="Objetiva Broker">
+  </button>
+</div>
+
+</body>
+</html>
