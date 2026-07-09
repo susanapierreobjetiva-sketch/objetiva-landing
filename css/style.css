@@ -93,11 +93,22 @@ nav a:hover {
   transform: translate(-50%, -50%);
   z-index: 1;
 }
-
 .emblem-wrap img {
   width: clamp(260px, 20vw, 400px);
   height: auto;
   display: block;
+  position: relative;
+  z-index: 1;
+}
+
+.emblem-wrap::before {
+  content: "";
+  position: absolute;
+  inset: -8%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(240, 201, 135, 0.18) 0%, rgba(240, 201, 135, 0) 70%);
+  z-index: 0;
+  pointer-events: none;
 }
 
 .hero-copy {
