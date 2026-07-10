@@ -298,8 +298,14 @@ section {
 
 .why {
   background:
-    radial-gradient(ellipse 900px 700px at 80% 10%, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0) 70%),
-    linear-gradient(135deg, #D4D5D7 0%, #8A8C8F 50%, #4A4C4F 100%);
+    radial-gradient(ellipse 900px 700px at 80% 10%, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0) 70%),
+    linear-gradient(135deg, #E4E5E7 0%, #CFD0D2 50%, #BCBDBF 100%);
+}
+.why .section-eyebrow {
+  color: #C79A3E;
+}
+.why .section-head h2 {
+  color: #101012;
 }
 
 .why-grid {
@@ -310,7 +316,7 @@ section {
 
 .why-item .num {
   font-size: 13px;
-  color: var(--gold);
+  color: var(--gold-dark);
   font-weight: 600;
   margin-bottom: 14px;
 }
@@ -318,20 +324,21 @@ section {
 .why-item h3 {
   font-size: 18px;
   font-weight: 600;
+  color: #101012;
   margin-bottom: 4px;
 }
 
 .why-item .underline {
   width: 20px;
   height: 3px;
-  background: var(--gold);
+  background: #C79A3E;
   margin: 12px 0 16px;
   border-radius: 0;
 }
 
 .why-item p {
-  font-size: 14px;
-  color: rgba(20, 20, 22, 0.75);
+  font-size: 15px;
+  color: #2B2C2E;
   line-height: 1.7;
 }
 
