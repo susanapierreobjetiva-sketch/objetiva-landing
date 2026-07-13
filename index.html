@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/asistente.css">
 </head>
 <body>
 
@@ -191,5 +192,65 @@
 </footer>
 
 <script src="js/main.js"></script>
+
+<!-- Asistente virtual Objetiva -->
+<div class="assistant-widget" id="assistantWidget">
+  <div class="assistant-panel">
+    <div class="assistant-head">
+      <div class="assistant-avatar">
+        <img src="assets/img/emblema-objetiva.png" alt="Objetiva Broker">
+      </div>
+      <div>
+        <div class="name">Asistente Objetiva</div>
+        <div class="status" id="assistantStatus">Disponible ahora</div>
+      </div>
+      <div class="assistant-head-actions">
+        <button type="button" id="btnVolverChat" style="display:none;">← volver al chat</button>
+      </div>
+    </div>
+
+    <div class="assistant-body" id="assistantBody">
+      <div class="assistant-msg">Hola, soy el asistente virtual de Objetiva Broker. ¿En qué puedo ayudarte con tu seguro?</div>
+      <div class="assistant-meeting-link">
+        <button type="button" id="btnAbrirReunion">¿Prefieres agendar una reunión con un agente?</button>
+      </div>
+    </div>
+
+    <div class="reunion-view" id="reunionView">
+      <label for="rNombre">Nombre</label>
+      <input type="text" id="rNombre" placeholder="Tu nombre">
+      <label for="rContacto">Email o teléfono</label>
+      <input type="text" id="rContacto" placeholder="tu@email.com o 6XX XXX XXX">
+      <label for="rFranja">Franja horaria preferida</label>
+      <select id="rFranja">
+        <option value="mañana">Mañana</option>
+        <option value="tarde">Tarde</option>
+        <option value="indiferente">Indiferente</option>
+      </select>
+      <label for="rMotivo">Motivo (opcional)</label>
+      <textarea id="rMotivo" placeholder="Cuéntanos brevemente qué necesitas"></textarea>
+      <button type="button" class="reunion-submit" id="btnEnviarReunion">Solicitar reunión</button>
+      <div class="reunion-status" id="reunionStatus"></div>
+    </div>
+
+    <div class="assistant-foot" id="assistantFoot">
+      <form id="chatForm">
+        <input type="text" id="chatInput" placeholder="Escribe tu consulta..." autocomplete="off">
+        <button type="submit" class="assistant-send" id="chatSend">Enviar</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="assistant-bubble" id="assistantBubble">
+    <button type="button" class="bubble-close" id="bubbleClose" aria-label="Cerrar">&times;</button>
+    ¿Hablamos? Puedo resolver tus dudas sobre seguros o ayudarte a agendar una reunión.
+  </div>
+
+  <button class="assistant-toggle" aria-label="Abrir asistente" onclick="document.getElementById('assistantWidget').classList.toggle('open')">
+    <img src="assets/img/emblema-objetiva.png" alt="Objetiva Broker">
+  </button>
+</div>
+<script src="js/asistente.js"></script>
+
 </body>
 </html>

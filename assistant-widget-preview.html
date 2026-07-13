@@ -28,7 +28,7 @@ body {
 .page-note h1 { font-size: 22px; font-weight: 600; margin-bottom: 12px; }
 .page-note p { font-size: 14px; color: rgba(241,241,240,0.55); line-height: 1.7; margin-bottom: 8px; }
 
-/* ---------- Asistente virtual (maqueta) ---------- */
+/* ---------- Asistente virtual ---------- */
 
 .assistant-widget {
   position: fixed;
@@ -92,6 +92,9 @@ body {
   pointer-events: none;
   transition: opacity 0.25s ease, transform 0.25s ease;
   box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  display: flex;
+  flex-direction: column;
+  max-height: 480px;
 }
 
 .assistant-widget.open .assistant-panel {
@@ -106,6 +109,7 @@ body {
   display: flex;
   align-items: center;
   gap: 12px;
+  flex: none;
 }
 
 .assistant-avatar {
@@ -131,8 +135,33 @@ body {
 
 .assistant-head .name { font-size: 14px; font-weight: 600; color: var(--text); }
 .assistant-head .status { font-size: 11.5px; color: var(--gold); margin-top: 2px; }
+.assistant-head .status.offline { color: rgba(241,241,240,0.4); }
 
-.assistant-body { padding: 18px 20px; min-height: 120px; }
+.assistant-head-actions { margin-left: auto; }
+.assistant-head-actions button {
+  background: none;
+  border: none;
+  color: rgba(241,241,240,0.45);
+  font-size: 11px;
+  font-family: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+}
+.assistant-head-actions button:hover { color: var(--gold); }
+
+/* ---- Vista chat ---- */
+
+.assistant-body {
+  padding: 18px 20px;
+  min-height: 120px;
+  max-height: 300px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1 1 auto;
+}
 
 .assistant-msg {
   background: #17171a;
@@ -144,12 +173,32 @@ body {
   max-width: 90%;
 }
 
+.assistant-msg.user {
+  align-self: flex-end;
+  background: rgba(240, 201, 135, 0.14);
+  border: 1px solid rgba(240, 201, 135, 0.28);
+  color: var(--text);
+}
+
+.assistant-msg.error {
+  border: 1px solid rgba(220, 90, 90, 0.4);
+  color: rgba(241,241,240,0.6);
+}
+
+.assistant-msg.typing {
+  color: rgba(241,241,240,0.4);
+  font-style: italic;
+}
+
 .assistant-foot {
   padding: 14px 16px;
   border-top: 1px solid rgba(240, 201, 135, 0.22);
+  flex: none;
 }
 
-.assistant-foot input {
+.assistant-foot form { display: flex; gap: 8px; }
+
+.assistant-foot input[type="text"] {
   width: 100%;
   background: #17171a;
   border: 1px solid rgba(240, 201, 135, 0.2);
@@ -161,6 +210,88 @@ body {
 }
 
 .assistant-foot input::placeholder { color: rgba(241,241,240,0.35); }
+
+.assistant-foot input:disabled { opacity: 0.5; }
+
+.assistant-send {
+  background: var(--gold);
+  border: none;
+  border-radius: var(--radius);
+  padding: 0 14px;
+  color: #101012;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  flex: none;
+}
+.assistant-send:disabled { opacity: 0.5; cursor: default; }
+
+.assistant-meeting-link {
+  margin-top: 10px;
+  text-align: center;
+}
+.assistant-meeting-link button {
+  background: none;
+  border: none;
+  color: var(--gold);
+  font-size: 11.5px;
+  font-family: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+/* ---- Vista formulario reunión ---- */
+
+.reunion-view { display: none; padding: 18px 20px; overflow-y: auto; }
+.reunion-view.active { display: block; }
+.assistant-body.hidden-view { display: none; }
+
+.reunion-view label {
+  display: block;
+  font-size: 11.5px;
+  color: rgba(241,241,240,0.5);
+  margin: 12px 0 5px;
+}
+.reunion-view label:first-child { margin-top: 0; }
+
+.reunion-view input,
+.reunion-view select,
+.reunion-view textarea {
+  width: 100%;
+  background: #17171a;
+  border: 1px solid rgba(240, 201, 135, 0.2);
+  border-radius: var(--radius);
+  padding: 9px 11px;
+  color: var(--text);
+  font-size: 13px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  resize: vertical;
+}
+
+.reunion-view textarea { min-height: 56px; }
+
+.reunion-submit {
+  margin-top: 16px;
+  width: 100%;
+  background: var(--gold);
+  border: none;
+  border-radius: var(--radius);
+  padding: 10px 0;
+  color: #101012;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+}
+.reunion-submit:disabled { opacity: 0.5; cursor: default; }
+
+.reunion-status {
+  margin-top: 10px;
+  font-size: 12px;
+  color: rgba(241,241,240,0.6);
+  line-height: 1.5;
+}
+.reunion-status.ok { color: #8fd19e; }
+.reunion-status.error { color: #e0938f; }
 
 .label-tag {
   position: fixed;
@@ -175,9 +306,8 @@ body {
 <body>
 
 <div class="page-note">
-  <h1>Objetiva Broker — Asistente virtual (maqueta)</h1>
-  <p>Avatar: el emblema real de la marca (assets/img/emblema-objetiva.png), recortado en círculo con el mismo anillo dorado fino que .cat-icon en Seguros y una viñeta interior sutil para que se integre igual que sobre la roca del hero.</p>
-  <p>Haz clic en el botón inferior derecho para ver la transición cerrado → abierto.</p>
+  <h1>Objetiva Broker — Asistente virtual</h1>
+  <p>Widget cableado a /chat y /reunion. Cambia API_BASE al principio del &lt;script&gt; según el entorno (dev/prod) antes de subirlo.</p>
 </div>
 
 <span class="label-tag tag-closed">↓ estado cerrado</span>
@@ -190,14 +320,49 @@ body {
       </div>
       <div>
         <div class="name">Asistente Objetiva</div>
-        <div class="status">Disponible ahora</div>
+        <div class="status" id="assistantStatus">Disponible ahora</div>
+      </div>
+      <div class="assistant-head-actions">
+        <button type="button" id="btnVolverChat" style="display:none;">← volver al chat</button>
       </div>
     </div>
-    <div class="assistant-body">
+
+    <!-- Vista chat -->
+    <div class="assistant-body" id="assistantBody">
       <div class="assistant-msg">Hola, soy el asistente virtual de Objetiva Broker. ¿En qué puedo ayudarte con tu seguro?</div>
+      <div class="assistant-meeting-link">
+        <button type="button" id="btnAbrirReunion">¿Prefieres agendar una reunión con un agente?</button>
+      </div>
     </div>
-    <div class="assistant-foot">
-      <input type="text" placeholder="Escribe tu consulta..." disabled>
+
+    <!-- Vista formulario reunión -->
+    <div class="reunion-view" id="reunionView">
+      <label for="rNombre">Nombre</label>
+      <input type="text" id="rNombre" placeholder="Tu nombre">
+
+      <label for="rContacto">Email o teléfono</label>
+      <input type="text" id="rContacto" placeholder="tu@email.com o 6XX XXX XXX">
+
+      <label for="rFranja">Franja horaria preferida</label>
+      <select id="rFranja">
+        <option value="mañana">Mañana</option>
+        <option value="tarde">Tarde</option>
+        <option value="indiferente">Indiferente</option>
+      </select>
+
+      <label for="rMotivo">Motivo (opcional)</label>
+      <textarea id="rMotivo" placeholder="Cuéntanos brevemente qué necesitas"></textarea>
+
+      <button type="button" class="reunion-submit" id="btnEnviarReunion">Solicitar reunión</button>
+      <div class="reunion-status" id="reunionStatus"></div>
+    </div>
+
+    <!-- Input de chat -->
+    <div class="assistant-foot" id="assistantFoot">
+      <form id="chatForm">
+        <input type="text" id="chatInput" placeholder="Escribe tu consulta..." autocomplete="off">
+        <button type="submit" class="assistant-send" id="chatSend">Enviar</button>
+      </form>
     </div>
   </div>
 
@@ -205,6 +370,200 @@ body {
     <img src="assets/img/emblema-objetiva.png" alt="Objetiva Broker">
   </button>
 </div>
+
+<script>
+(function () {
+  // ---------------------------------------------------------------
+  // CONFIG: cambiar esta línea según el entorno antes de desplegar.
+  // Dev  -> 'http://212.227.37.210:8020'
+  // Prod -> '/asistente-api'   (cuando Nginx esté montado)
+  // ---------------------------------------------------------------
+  const API_BASE = 'http://localhost:8020';
+
+  const body = document.getElementById('assistantBody');
+  const form = document.getElementById('chatForm');
+  const input = document.getElementById('chatInput');
+  const sendBtn = document.getElementById('chatSend');
+  const statusEl = document.getElementById('assistantStatus');
+  const foot = document.getElementById('assistantFoot');
+
+  // Memoria de la conversacion: vive solo en el navegador, se pierde al
+  // recargar la pagina. El backend sigue siendo stateless; es el cliente
+  // quien reenvia el contexto en cada peticion. Se limita para no crecer
+  // sin control (coste de tokens en Groq y tamano de la peticion).
+  const MAX_HISTORIAL = 12; // mensajes (usuario + asistente combinados)
+  let conversationHistory = [];
+
+  function pushHistorial(role, content) {
+    conversationHistory.push({ role, content });
+    if (conversationHistory.length > MAX_HISTORIAL) {
+      conversationHistory = conversationHistory.slice(-MAX_HISTORIAL);
+    }
+  }
+
+  const reunionView = document.getElementById('reunionView');
+  const btnAbrirReunion = document.getElementById('btnAbrirReunion');
+  const btnVolverChat = document.getElementById('btnVolverChat');
+  const btnEnviarReunion = document.getElementById('btnEnviarReunion');
+  const reunionStatus = document.getElementById('reunionStatus');
+
+  function addMessage(text, cls) {
+    const div = document.createElement('div');
+    div.className = 'assistant-msg' + (cls ? ' ' + cls : '');
+    div.textContent = text;
+    body.appendChild(div);
+    body.scrollTop = body.scrollHeight;
+    return div;
+  }
+
+  function setSending(isSending) {
+    input.disabled = isSending;
+    sendBtn.disabled = isSending;
+  }
+
+  async function sendMessage(mensaje) {
+    addMessage(mensaje, 'user');
+    setSending(true);
+    const typing = addMessage('Escribiendo…', 'typing');
+
+    // El historial que se envia es el de ANTES de este mensaje (el backend
+    // ya recibe "mensaje" por separado y lo añade el ultimo).
+    const historialParaEnviar = conversationHistory.slice();
+
+    try {
+      const res = await fetch(API_BASE + '/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ mensaje, historial: historialParaEnviar })
+      });
+
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+
+      const data = await res.json();
+      typing.remove();
+
+      // Ajustar el nombre del campo si el backend devuelve otra clave
+      // (p.ej. respuesta / texto / mensaje). respuesta es lo esperado.
+      const texto = data.respuesta || data.texto || data.mensaje || 'No he podido generar una respuesta.';
+      addMessage(texto);
+      statusEl.textContent = 'Disponible ahora';
+      statusEl.classList.remove('offline');
+
+      // Se guarda en memoria siempre (venga de nivel 1 o 3): si el usuario
+      // responde "si" a una pregunta de nivel 1, el turno siguiente (que
+      // ira a nivel 3) necesita saber a que estaba diciendo que si.
+      pushHistorial('user', mensaje);
+      pushHistorial('assistant', texto);
+
+      // Si nivel 1 detecto que quiere agendar reunion, no seguimos en chat
+      // libre: pasamos al formulario estructurado de /reunion. Evita que
+      // datos sensibles (nombre, contacto) se interpreten como texto suelto
+      // por el LLM.
+      if (data.intencion === 'agendar_reunion') {
+        setTimeout(showReunion, 700);
+      }
+    } catch (err) {
+      typing.remove();
+      addMessage('No he podido conectar con el asistente. Puedes escribirnos al 922 04 62 81 o agendar una reunión.', 'error');
+      statusEl.textContent = 'Sin conexión';
+      statusEl.classList.add('offline');
+      console.error('Error /chat:', err);
+    } finally {
+      setSending(false);
+      input.focus();
+    }
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    const mensaje = input.value.trim();
+    if (!mensaje) return;
+    input.value = '';
+    sendMessage(mensaje);
+  });
+
+  // ---------------- Vista reunión ----------------
+
+  function showReunion() {
+    body.classList.add('hidden-view');
+    foot.style.display = 'none';
+    reunionView.classList.add('active');
+    btnVolverChat.style.display = 'inline';
+  }
+
+  function showChat() {
+    body.classList.remove('hidden-view');
+    foot.style.display = 'block';
+    reunionView.classList.remove('active');
+    btnVolverChat.style.display = 'none';
+  }
+
+  btnAbrirReunion.addEventListener('click', showReunion);
+  btnVolverChat.addEventListener('click', showChat);
+
+  function validarContacto(v) {
+    const email = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const telefono = /^[\d\s+()-]{6,}$/;
+    return email.test(v) || telefono.test(v);
+  }
+
+  async function enviarReunion() {
+    const nombre = document.getElementById('rNombre').value.trim();
+    const contacto = document.getElementById('rContacto').value.trim();
+    const franja = document.getElementById('rFranja').value;
+    const motivo = document.getElementById('rMotivo').value.trim();
+
+    reunionStatus.className = 'reunion-status';
+    reunionStatus.textContent = '';
+
+    if (nombre.length < 2) {
+      reunionStatus.textContent = 'Escribe tu nombre completo.';
+      reunionStatus.classList.add('error');
+      return;
+    }
+    if (!validarContacto(contacto)) {
+      reunionStatus.textContent = 'Indica un email o teléfono válido.';
+      reunionStatus.classList.add('error');
+      return;
+    }
+
+    btnEnviarReunion.disabled = true;
+    reunionStatus.textContent = 'Enviando…';
+
+    try {
+      const res = await fetch(API_BASE + '/reunion', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nombre, contacto, franja, motivo })
+      });
+
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+
+      const data = await res.json();
+
+      if (data.aviso_enviado === false) {
+        reunionStatus.textContent = 'Solicitud registrada. Te contactaremos en breve (aviso interno pendiente de confirmar).';
+        reunionStatus.classList.add('ok');
+      } else {
+        reunionStatus.textContent = '¡Solicitud enviada! Un agente te contactará pronto.';
+        reunionStatus.classList.add('ok');
+      }
+
+      document.getElementById('rNombre').value = '';
+      document.getElementById('rContacto').value = '';
+      document.getElementById('rMotivo').value = '';
+    } catch (err) {
+      reunionStatus.textContent = 'No se pudo enviar. Llama al 922 04 62 81 o al 680 686 245 (WhatsApp).';
+      reunionStatus.classList.add('error');
+      console.error('Error /reunion:', err);
+    } finally {
+      btnEnviarReunion.disabled = false;
+    }
+  }
+
+  btnEnviarReunion.addEventListener('click', enviarReunion);
+})();
+</script>
 
 </body>
 </html>

@@ -1,0 +1,244 @@
+/* ============================================
+   Asistente virtual Objetiva — estilos widget
+   Cargar despues de style.css en index.html
+   ============================================ */
+
+.assistant-widget {
+  position: fixed;
+  right: 32px;
+  bottom: 32px;
+  z-index: 50;
+  --gold: #F0C987;
+  --a-bg: #000000;
+  --a-text: #F1F1F0;
+  --a-radius: 3px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.assistant-toggle {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #1c1c1f 0%, #101012 70%);
+  border: 1.4px solid var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+  position: relative;
+  overflow: hidden;
+  padding: 0;
+}
+.assistant-toggle:hover { transform: scale(1.05); border-color: #fff; }
+.assistant-toggle img {
+  position: absolute; top: 50%; left: 50%;
+  width: 132%; height: 132%;
+  transform: translate(-50%, -50%);
+  object-fit: cover; display: block;
+}
+.assistant-toggle::after {
+  content: ""; position: absolute; inset: 0;
+  border-radius: 50%;
+  box-shadow: inset 0 0 10px 3px rgba(0,0,0,0.55);
+  pointer-events: none;
+}
+
+.assistant-panel {
+  position: absolute; right: 0; bottom: 76px;
+  width: 320px;
+  background: var(--a-bg);
+  border: 1px solid rgba(240, 201, 135, 0.3);
+  border-radius: var(--a-radius);
+  overflow: hidden;
+  opacity: 0; transform: translateY(12px);
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  display: flex; flex-direction: column;
+  max-height: 480px;
+}
+.assistant-widget.open .assistant-panel {
+  opacity: 1; transform: translateY(0); pointer-events: auto;
+}
+
+.assistant-head {
+  padding: 18px 20px;
+  border-bottom: 1px solid rgba(240, 201, 135, 0.22);
+  display: flex; align-items: center; gap: 12px; flex: none;
+}
+.assistant-avatar {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 1.2px solid var(--gold);
+  overflow: hidden; flex: none; position: relative;
+}
+.assistant-avatar img {
+  position: absolute; top: 50%; left: 50%;
+  width: 132%; height: 132%;
+  transform: translate(-50%, -50%);
+  object-fit: cover; display: block;
+}
+.assistant-head .name { font-size: 14px; font-weight: 600; color: var(--a-text); }
+.assistant-head .status { font-size: 11.5px; color: var(--gold); margin-top: 2px; }
+.assistant-head .status.offline { color: rgba(241,241,240,0.4); }
+.assistant-head-actions { margin-left: auto; }
+.assistant-head-actions button {
+  background: none; border: none;
+  color: rgba(241,241,240,0.45);
+  font-size: 11px; font-family: inherit; cursor: pointer;
+  text-decoration: underline; padding: 0;
+}
+.assistant-head-actions button:hover { color: var(--gold); }
+
+.assistant-body {
+  padding: 18px 20px; min-height: 120px; max-height: 300px;
+  overflow-y: auto; display: flex; flex-direction: column;
+  gap: 10px; flex: 1 1 auto;
+}
+.assistant-msg {
+  background: #17171a; border-radius: var(--a-radius);
+  padding: 12px 14px; font-size: 13px;
+  color: rgba(241, 241, 240, 0.75); line-height: 1.6; max-width: 90%;
+}
+.assistant-msg.user {
+  align-self: flex-end;
+  background: rgba(240, 201, 135, 0.14);
+  border: 1px solid rgba(240, 201, 135, 0.28);
+  color: var(--a-text);
+}
+.assistant-msg.error {
+  border: 1px solid rgba(220, 90, 90, 0.4);
+  color: rgba(241,241,240,0.6);
+}
+.assistant-msg.typing { color: rgba(241,241,240,0.4); font-style: italic; }
+
+.assistant-foot {
+  padding: 14px 16px;
+  border-top: 1px solid rgba(240, 201, 135, 0.22); flex: none;
+}
+.assistant-foot form { display: flex; gap: 8px; }
+.assistant-foot input[type="text"] {
+  width: 100%; background: #17171a;
+  border: 1px solid rgba(240, 201, 135, 0.2);
+  border-radius: var(--a-radius);
+  padding: 10px 12px; color: var(--a-text);
+  font-size: 13px; font-family: 'Plus Jakarta Sans', sans-serif;
+}
+.assistant-foot input::placeholder { color: rgba(241,241,240,0.35); }
+.assistant-foot input:disabled { opacity: 0.5; }
+.assistant-send {
+  background: var(--gold); border: none;
+  border-radius: var(--a-radius); padding: 0 14px;
+  color: #101012; font-weight: 600; font-size: 13px;
+  cursor: pointer; flex: none;
+}
+.assistant-send:disabled { opacity: 0.5; cursor: default; }
+
+.assistant-meeting-link { margin-top: 10px; text-align: center; }
+.assistant-meeting-link button {
+  background: none; border: none; color: var(--gold);
+  font-size: 11.5px; font-family: inherit; cursor: pointer;
+  text-decoration: underline;
+}
+
+.reunion-view { display: none; padding: 18px 20px; overflow-y: auto; }
+.reunion-view.active { display: block; }
+.assistant-body.hidden-view { display: none; }
+.reunion-view label {
+  display: block; font-size: 11.5px;
+  color: rgba(241,241,240,0.5); margin: 12px 0 5px;
+}
+.reunion-view label:first-child { margin-top: 0; }
+.reunion-view input, .reunion-view select, .reunion-view textarea {
+  width: 100%; background: #17171a;
+  border: 1px solid rgba(240, 201, 135, 0.2);
+  border-radius: var(--a-radius);
+  padding: 9px 11px; color: var(--a-text);
+  font-size: 13px; font-family: 'Plus Jakarta Sans', sans-serif;
+  resize: vertical;
+}
+.reunion-view textarea { min-height: 56px; }
+.reunion-submit {
+  margin-top: 16px; width: 100%; background: var(--gold);
+  border: none; border-radius: var(--a-radius);
+  padding: 10px 0; color: #101012; font-weight: 600;
+  font-size: 13px; cursor: pointer;
+}
+.reunion-submit:disabled { opacity: 0.5; cursor: default; }
+.reunion-status {
+  margin-top: 10px; font-size: 12px;
+  color: rgba(241,241,240,0.6); line-height: 1.5;
+}
+.reunion-status.ok { color: #8fd19e; }
+.reunion-status.error { color: #e0938f; }
+
+@media (max-width: 480px) {
+  .assistant-widget { right: 16px; bottom: 16px; }
+  .assistant-panel { width: calc(100vw - 32px); }
+}
+
+/* ---- Pulso del boton (llama la atencion) ---- */
+/* Usa box-shadow animado: se dibuja FUERA del boton y no lo recorta
+   el overflow:hidden que necesita el emblema circular. */
+.assistant-toggle {
+  animation: assistantPulse 2.4s ease-out infinite;
+}
+/* al abrir el widget, detener el pulso: ya no hace falta */
+.assistant-widget.open .assistant-toggle { animation: none; }
+
+@keyframes assistantPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(240, 201, 135, 0.55); }
+  70%  { box-shadow: 0 0 0 14px rgba(240, 201, 135, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(240, 201, 135, 0); }
+}
+
+/* respeto por usuarios que prefieren menos movimiento */
+@media (prefers-reduced-motion: reduce) {
+  .assistant-toggle { animation: none; }
+}
+
+/* ---- Burbuja de saludo ---- */
+.assistant-bubble {
+  position: absolute;
+  bottom: 6px;
+  right: 84px;
+  width: 210px;
+  background: var(--a-bg, #000);
+  border: 1px solid rgba(240, 201, 135, 0.35);
+  border-radius: var(--a-radius, 3px);
+  padding: 12px 14px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+  color: rgba(241,241,240,0.85);
+  font-size: 12.5px;
+  line-height: 1.5;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  opacity: 0;
+  transform: translateX(10px) scale(0.96);
+  pointer-events: none;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  cursor: pointer;
+}
+.assistant-bubble.show {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+  pointer-events: auto;
+}
+.assistant-bubble .bubble-close {
+  position: absolute;
+  top: 4px; right: 8px;
+  background: none; border: none;
+  color: rgba(241,241,240,0.4);
+  font-size: 15px; line-height: 1; cursor: pointer; padding: 2px;
+}
+.assistant-bubble .bubble-close:hover { color: var(--gold); }
+/* pico de la burbuja apuntando al boton */
+.assistant-bubble::after {
+  content: "";
+  position: absolute;
+  right: -6px; bottom: 20px;
+  width: 12px; height: 12px;
+  background: var(--a-bg, #000);
+  border-right: 1px solid rgba(240, 201, 135, 0.35);
+  border-bottom: 1px solid rgba(240, 201, 135, 0.35);
+  transform: rotate(-45deg);
+}
