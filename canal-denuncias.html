@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Canal de Denuncias · Objetiva Broker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --obsidiana:#0E0C09;
+    --obsidiana-2:#171410;
+    --papel:#F2EFE9;
+    --papel-tenue:#B7B2A7;
+    --oro:#C9A870;
+    --oro-tenue:#8A784E;
+    --linea:#2A251E;
+    --ok:#7FB08A;
+    --r:3px;
+    --serif:'Fraunces',Georgia,serif;
+    --sans:'Inter',system-ui,-apple-system,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--obsidiana);
+    color:var(--papel);
+    font-family:var(--sans);
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+  .wrap{max-width:920px;margin:0 auto;padding:0 24px}
+
+  /* Header */
+  header{border-bottom:1px solid var(--linea);position:sticky;top:0;background:rgba(14,12,9,.86);backdrop-filter:blur(10px);z-index:10}
+  .bar{display:flex;align-items:center;justify-content:space-between;height:68px}
+  .brand{display:flex;align-items:center;gap:12px;font-family:var(--serif);font-weight:500;letter-spacing:.02em}
+  .brand .mark{width:26px;height:26px;flex:0 0 auto}
+  .brand small{display:block;font-family:var(--sans);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--oro);font-weight:600}
+  .brand b{font-size:17px;font-weight:500}
+  header nav a{color:var(--papel-tenue);text-decoration:none;font-size:13px;letter-spacing:.02em;margin-left:22px}
+  header nav a:hover{color:var(--papel)}
+  @media(max-width:640px){header nav{display:none}}
+
+  /* Hero */
+  .hero{padding:76px 0 54px;position:relative}
+  .eyebrow{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--oro);font-weight:600;margin-bottom:20px}
+  .hero h1{font-family:var(--serif);font-weight:400;font-size:clamp(34px,6vw,56px);line-height:1.05;letter-spacing:-.01em;max-width:16ch}
+  .hero h1 em{font-style:italic;color:var(--oro)}
+  .hero p.lead{margin-top:22px;max-width:56ch;color:var(--papel-tenue);font-size:clamp(16px,2.2vw,19px)}
+  .hero .actions{margin-top:34px;display:flex;gap:14px;flex-wrap:wrap}
+
+  .btn{display:inline-flex;align-items:center;gap:9px;font-family:var(--sans);font-weight:600;font-size:15px;padding:14px 22px;border-radius:var(--r);text-decoration:none;border:1px solid transparent;cursor:pointer;transition:transform .15s ease,background .15s ease,border-color .15s ease}
+  .btn-primary{background:var(--oro);color:var(--obsidiana)}
+  .btn-primary:hover{transform:translateY(-1px);background:#d8bb85}
+  .btn-ghost{background:transparent;color:var(--papel);border-color:var(--linea)}
+  .btn-ghost:hover{border-color:var(--oro-tenue);color:var(--oro)}
+
+  /* Seal (signature) */
+  .seal{position:absolute;top:60px;right:-6px;width:150px;height:150px;opacity:.9;pointer-events:none}
+  @media(max-width:760px){.seal{display:none}}
+  .seal .ring{transform-origin:75px 75px;animation:spin 46s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  /* Sections */
+  section{padding:56px 0;border-top:1px solid var(--linea)}
+  .sec-label{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--oro-tenue);font-weight:600;margin-bottom:26px}
+  h2{font-family:var(--serif);font-weight:400;font-size:clamp(26px,4vw,36px);letter-spacing:-.01em;margin-bottom:8px}
+
+  /* Steps / how it works */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--linea);border:1px solid var(--linea);border-radius:var(--r);overflow:hidden}
+  @media(max-width:720px){.steps{grid-template-columns:1fr}}
+  .step{background:var(--obsidiana);padding:26px 24px}
+  .step .n{font-family:var(--serif);color:var(--oro);font-size:20px;margin-bottom:12px}
+  .step h3{font-size:16px;font-weight:600;margin-bottom:6px}
+  .step p{font-size:14px;color:var(--papel-tenue)}
+
+  /* Guarantees grid */
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:10px}
+  @media(max-width:640px){.grid{grid-template-columns:1fr}}
+  .card{background:var(--obsidiana-2);border:1px solid var(--linea);border-radius:var(--r);padding:24px}
+  .card svg{width:22px;height:22px;color:var(--oro);margin-bottom:12px}
+  .card h3{font-size:16px;font-weight:600;margin-bottom:6px}
+  .card p{font-size:14px;color:var(--papel-tenue)}
+
+  /* Form */
+  .panel{background:var(--obsidiana-2);border:1px solid var(--linea);border-radius:var(--r);padding:clamp(24px,4vw,40px)}
+  .tabs{display:flex;gap:8px;margin-bottom:28px;flex-wrap:wrap}
+  .tab{flex:1;min-width:150px;text-align:center;padding:12px;border:1px solid var(--linea);border-radius:var(--r);background:transparent;color:var(--papel-tenue);font-family:var(--sans);font-size:14px;font-weight:600;cursor:pointer}
+  .tab[aria-selected="true"]{border-color:var(--oro);color:var(--oro);background:rgba(201,168,112,.06)}
+
+  label{display:block;font-size:13px;font-weight:600;letter-spacing:.02em;margin:20px 0 8px}
+  label .opt{font-weight:400;color:var(--papel-tenue);letter-spacing:0}
+  input[type=text],input[type=email],input[type=password],select,textarea{
+    width:100%;background:var(--obsidiana);border:1px solid var(--linea);border-radius:var(--r);
+    color:var(--papel);font-family:var(--sans);font-size:15px;padding:12px 14px;transition:border-color .15s
+  }
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--oro)}
+  textarea{min-height:130px;resize:vertical}
+  .file{border:1px dashed var(--linea);border-radius:var(--r);padding:16px;font-size:13px;color:var(--papel-tenue);text-align:center;cursor:pointer}
+  .file:hover{border-color:var(--oro-tenue)}
+  .anon-note{display:none;margin-top:18px;padding:14px 16px;border-left:2px solid var(--oro);background:rgba(201,168,112,.06);font-size:13px;color:var(--papel-tenue);border-radius:0 var(--r) var(--r) 0}
+  .identity-fields{display:none}
+  .consent{display:flex;gap:11px;align-items:flex-start;margin-top:24px;font-size:13px;color:var(--papel-tenue)}
+  .consent input{margin-top:3px;flex:0 0 auto;width:16px;height:16px;accent-color:var(--oro)}
+  .consent a{color:var(--oro)}
+  .form-foot{margin-top:26px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .form-foot small{color:var(--papel-tenue);font-size:12px}
+
+  /* Success */
+  .success{display:none;text-align:center;padding:12px 0}
+  .success .badge{width:56px;height:56px;margin:0 auto 18px;border-radius:50%;background:rgba(127,176,138,.12);display:flex;align-items:center;justify-content:center}
+  .success .badge svg{width:26px;height:26px;color:var(--ok)}
+  .success h3{font-family:var(--serif);font-size:26px;font-weight:400;margin-bottom:10px}
+  .success p{color:var(--papel-tenue);max-width:46ch;margin:0 auto 24px;font-size:14px}
+  .creds{display:inline-flex;gap:0;border:1px solid var(--linea);border-radius:var(--r);overflow:hidden;margin-bottom:8px;flex-wrap:wrap}
+  .cred{padding:14px 22px;background:var(--obsidiana);min-width:150px}
+  .cred+.cred{border-left:1px solid var(--linea)}
+  .cred span{display:block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--oro-tenue);margin-bottom:5px}
+  .cred b{font-family:var(--serif);font-size:20px;letter-spacing:.06em;color:var(--papel)}
+  .warn{margin-top:14px;font-size:12px;color:var(--oro)}
+
+  /* Consultar estado */
+  .track-row{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end;margin-top:8px}
+  .track-row>div{flex:1;min-width:160px}
+  .track-row label{margin-top:0}
+
+  /* External / footer */
+  .ext{font-size:14px;color:var(--papel-tenue);max-width:64ch}
+  .ext a{color:var(--oro)}
+  footer{border-top:1px solid var(--linea);padding:40px 0;color:var(--papel-tenue);font-size:12px}
+  footer .fgrid{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  footer a{color:var(--papel-tenue);text-decoration:none}
+  footer a:hover{color:var(--oro)}
+  .demo-flag{background:var(--oro);color:var(--obsidiana);text-align:center;font-size:12px;font-weight:600;padding:7px;letter-spacing:.02em}
+</style>
+</head>
+<body>
+
+<div class="demo-flag">Vista previa · Formulario en modo demostración (aún sin conectar al servidor)</div>
+
+<header>
+  <div class="wrap bar">
+    <div class="brand">
+      <svg class="mark" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="14" stroke="#C9A870" stroke-width="1.5"/><circle cx="16" cy="16" r="5" fill="#C9A870"/></svg>
+      <div><small>Objetiva Broker</small><b>Canal de Denuncias</b></div>
+    </div>
+    <nav>
+      <a href="#como-funciona">Cómo funciona</a>
+      <a href="#garantias">Garantías</a>
+      <a href="#consultar">Consultar estado</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <div class="wrap hero">
+    <svg class="seal" viewBox="0 0 150 150" fill="none">
+      <g class="ring">
+        <circle cx="75" cy="75" r="60" stroke="#8A784E" stroke-width="1" stroke-dasharray="2 6"/>
+      </g>
+      <circle cx="75" cy="75" r="46" stroke="#C9A870" stroke-width="1"/>
+      <path d="M75 55v18m0 0-7-7m7 7 7-7M60 88h30" stroke="#C9A870" stroke-width="1.5" stroke-linecap="round"/>
+      <text x="75" y="103" text-anchor="middle" fill="#8A784E" font-family="Inter" font-size="7" letter-spacing="2">CONFIDENCIAL</text>
+    </svg>
+    <p class="eyebrow">Sistema Interno de Información · Ley 2/2023</p>
+    <h1>Un canal <em>seguro</em> para comunicar irregularidades.</h1>
+    <p class="lead">Si has detectado una conducta que pueda constituir una infracción dentro de Objetiva Broker, puedes comunicarla aquí de forma confidencial &mdash; y, si lo prefieres, de manera totalmente anónima. Nadie podrá tomar represalias contra quien informa de buena fe.</p>
+    <div class="actions">
+      <a class="btn btn-primary" href="#formulario">Presentar una comunicación</a>
+      <a class="btn btn-ghost" href="#consultar">Consultar el estado de una denuncia</a>
+    </div>
+  </div>
+
+  <!-- CÓMO FUNCIONA -->
+  <section id="como-funciona">
+    <div class="wrap">
+      <p class="sec-label">Cómo funciona</p>
+      <div class="steps">
+        <div class="step">
+          <div class="n">01</div>
+          <h3>Comunicas</h3>
+          <p>Describes los hechos por escrito. Puedes adjuntar documentos, imágenes o audios, y decidir si te identificas o no.</p>
+        </div>
+        <div class="step">
+          <div class="n">02</div>
+          <h3>Recibes tu clave</h3>
+          <p>Se te entrega un código y una contraseña. Con ellos podrás seguir el caso y comunicarte con el gestor sin revelar tu identidad.</p>
+        </div>
+        <div class="step">
+          <div class="n">03</div>
+          <h3>Damos respuesta</h3>
+          <p>Acusamos recibo en un máximo de <b>7 días</b> y resolvemos la investigación en un plazo máximo de <b>3 meses</b>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORMULARIO -->
+  <section id="formulario">
+    <div class="wrap">
+      <p class="sec-label">Presentar una comunicación</p>
+      <h2>Cuéntanos qué ha ocurrido</h2>
+      <p class="lead" style="margin-bottom:32px;max-width:58ch">Todos los campos, salvo la descripción, son opcionales. Cuanto más detalle aportes, mejor podremos investigar.</p>
+
+      <div class="panel">
+        <!-- FORM VIEW -->
+        <form id="denuncia-form">
+          <div class="tabs" role="tablist">
+            <button type="button" class="tab" role="tab" aria-selected="true" data-mode="anon">Comunicar de forma anónima</button>
+            <button type="button" class="tab" role="tab" aria-selected="false" data-mode="id">Identificarme</button>
+          </div>
+
+          <div class="anon-note" id="anon-note">No te pediremos ningún dato personal. Tu única forma de seguir el caso será el código y la contraseña que recibirás al enviar. Guárdalos: no podremos recuperarlos por ti.</div>
+
+          <div class="identity-fields" id="identity-fields">
+            <label for="nombre">Nombre y apellidos <span class="opt">(opcional)</span></label>
+            <input type="text" id="nombre" autocomplete="name">
+            <label for="email">Correo de contacto <span class="opt">(opcional)</span></label>
+            <input type="email" id="email" autocomplete="email">
+          </div>
+
+          <label for="categoria">Tipo de irregularidad</label>
+          <select id="categoria">
+            <option value="">Selecciona una categoría…</option>
+            <option>Fraude o irregularidad financiera</option>
+            <option>Conflicto de intereses</option>
+            <option>Blanqueo de capitales</option>
+            <option>Protección de datos</option>
+            <option>Acoso o conducta laboral</option>
+            <option>Incumplimiento normativo</option>
+            <option>Otra</option>
+          </select>
+
+          <label for="descripcion">Descripción de los hechos</label>
+          <textarea id="descripcion" required placeholder="¿Qué ha ocurrido? ¿Quién está implicado? ¿Cuándo y dónde? Aporta todo el detalle que puedas."></textarea>
+
+          <label>Documentación de apoyo <span class="opt">(opcional)</span></label>
+          <label class="file" for="adjuntos">Arrastra archivos aquí o pulsa para seleccionar &mdash; documentos, imágenes, audio o vídeo</label>
+          <input type="file" id="adjuntos" multiple hidden>
+
+          <div class="consent">
+            <input type="checkbox" id="consent" required>
+            <label for="consent" style="margin:0;font-weight:400">He leído la <a href="#" onclick="return false;">información sobre protección de datos</a> y entiendo cómo se tratará mi comunicación conforme a la Ley 2/2023 y el RGPD.</label>
+          </div>
+
+          <div class="form-foot">
+            <button type="submit" class="btn btn-primary">Enviar comunicación</button>
+            <small>También puedes comunicarlo verbalmente solicitando una cita al Responsable del Sistema.</small>
+          </div>
+        </form>
+
+        <!-- SUCCESS VIEW -->
+        <div class="success" id="success">
+          <div class="badge"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h3>Comunicación registrada</h3>
+          <p>Hemos recibido tu comunicación. Guarda estas credenciales en un lugar seguro: son la única forma de consultar el estado y responder de forma anónima.</p>
+          <div class="creds">
+            <div class="cred"><span>Código</span><b id="out-code">—</b></div>
+            <div class="cred"><span>Contraseña</span><b id="out-pass">—</b></div>
+          </div>
+          <p class="warn">No volveremos a mostrarte estos datos. Anótalos antes de cerrar.</p>
+          <div style="margin-top:22px"><button type="button" class="btn btn-ghost" onclick="resetForm()">Presentar otra comunicación</button></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GARANTÍAS -->
+  <section id="garantias">
+    <div class="wrap">
+      <p class="sec-label">Tus garantías</p>
+      <h2>Protegido en todo momento</h2>
+      <div class="grid">
+        <div class="card">
+          <svg viewBox="0 0 24 24" fill="none"><rect x="4" y="10" width="16" height="10" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M8 10V7a4 4 0 018 0v3" stroke="currentColor" stroke-width="1.6"/></svg>
+          <h3>Confidencialidad garantizada</h3>
+          <p>Solo el Responsable del Sistema accede a las comunicaciones. La información viaja y se almacena cifrada, con acceso restringido y trazable.</p>
+        </div>
+        <div class="card">
+          <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.6"/><path d="M4 20a8 8 0 0116 0" stroke="currentColor" stroke-width="1.6" stroke-dasharray="2 3"/></svg>
+          <h3>Anonimato real</h3>
+          <p>Puedes comunicar sin dar tu nombre. El seguimiento se hace por código y contraseña, sin vincularte a la denuncia.</p>
+        </div>
+        <div class="card">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 3l8 4v5c0 4.5-3 7.5-8 9-5-1.5-8-4.5-8-9V7l8-4z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          <h3>Sin represalias</h3>
+          <p>La ley protege a quien informa de buena fe. Está prohibido cualquier trato adverso derivado de tu comunicación.</p>
+        </div>
+        <div class="card">
+          <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.6"/><path d="M12 8v4l3 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          <h3>Plazos claros</h3>
+          <p>Acuse de recibo en 7 días y resolución en un máximo de 3 meses, ampliables solo en casos justificados.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONSULTAR ESTADO -->
+  <section id="consultar">
+    <div class="wrap">
+      <p class="sec-label">Seguimiento</p>
+      <h2>Consultar el estado de una denuncia</h2>
+      <p class="lead" style="max-width:56ch;margin-bottom:24px">Introduce el código y la contraseña que recibiste al presentar tu comunicación.</p>
+      <div class="panel">
+        <div class="track-row">
+          <div><label for="t-code">Código</label><input type="text" id="t-code" placeholder="OBJ-XXXXXX"></div>
+          <div><label for="t-pass">Contraseña</label><input type="password" id="t-pass"></div>
+          <button type="button" class="btn btn-primary" onclick="consultar()">Consultar</button>
+        </div>
+        <p id="t-result" style="margin-top:16px;font-size:13px;color:var(--papel-tenue)"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CANALES EXTERNOS -->
+  <section id="externos">
+    <div class="wrap">
+      <p class="sec-label">Canales externos</p>
+      <h2>Tienes otras vías</h2>
+      <p class="ext" style="margin-top:14px">Este canal interno es la vía preferente, pero no la única. Si lo prefieres, puedes dirigirte directamente a la <b>Autoridad Independiente de Protección del Informante (AIPI)</b> o a la autoridad autonómica competente, que disponen de sus propios canales externos de comunicación. También puedes optar por la revelación pública en los términos previstos en la Ley 2/2023.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap fgrid">
+    <div>© 2026 Objetiva Broker · Correduría de Seguros</div>
+    <div>
+      <a href="#">Política del Sistema Interno de Información</a> &nbsp;·&nbsp;
+      <a href="#">Protección de datos</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ---------- Alternar anónimo / identificado ---------- */
+const tabs = document.querySelectorAll('.tab');
+const anonNote = document.getElementById('anon-note');
+const idFields = document.getElementById('identity-fields');
+let modo = 'anon';
+tabs.forEach(t=>t.addEventListener('click',()=>{
+  tabs.forEach(x=>x.setAttribute('aria-selected','false'));
+  t.setAttribute('aria-selected','true');
+  modo = t.dataset.mode;
+  anonNote.style.display = modo==='anon' ? 'block' : 'none';
+  idFields.style.display = modo==='id' ? 'block' : 'none';
+}));
+anonNote.style.display='block';
+
+/* ---------- Mostrar nombre de archivos elegidos ---------- */
+const fileInput = document.getElementById('adjuntos');
+const fileLabel = document.querySelector('.file');
+fileInput.addEventListener('change',()=>{
+  fileLabel.textContent = fileInput.files.length
+    ? `${fileInput.files.length} archivo(s) seleccionado(s)`
+    : 'Arrastra archivos aquí o pulsa para seleccionar — documentos, imágenes, audio o vídeo';
+});
+
+/* ---------- Envío (DEMO) ----------
+   TODO backend: sustituir generarDemo() por un fetch a FastAPI:
+   const res = await fetch('/api/canal/denuncias', {method:'POST', body: formData});
+   const {codigo, password} = await res.json();
+   El servidor genera y almacena el hash de la contraseña; aquí solo se muestra una vez.
+------------------------------------ */
+const form = document.getElementById('denuncia-form');
+const success = document.getElementById('success');
+form.addEventListener('submit',(e)=>{
+  e.preventDefault();
+  const desc = document.getElementById('descripcion').value.trim();
+  const consent = document.getElementById('consent').checked;
+  if(!desc){ alert('Por favor, describe los hechos.'); return; }
+  if(!consent){ alert('Debes aceptar la información sobre protección de datos.'); return; }
+
+  const {codigo, password} = generarDemo();
+  document.getElementById('out-code').textContent = codigo;
+  document.getElementById('out-pass').textContent = password;
+  form.style.display='none';
+  document.querySelector('.tabs').style.display='none';
+  anonNote.style.display='none';
+  success.style.display='block';
+  success.scrollIntoView({behavior:'smooth',block:'center'});
+});
+
+function generarDemo(){
+  const rnd = (n,set)=>Array.from({length:n},()=>set[Math.floor(Math.random()*set.length)]).join('');
+  const codigo = 'OBJ-' + rnd(6,'ABCDEFGHJKLMNPQRSTUVWXYZ23456789');
+  const password = rnd(4,'abcdefghijkmnpqrstuvwxyz') + '-' + rnd(4,'23456789');
+  return {codigo, password};
+}
+
+function resetForm(){
+  form.reset();
+  form.style.display='block';
+  document.querySelector('.tabs').style.display='flex';
+  success.style.display='none';
+  fileLabel.textContent='Arrastra archivos aquí o pulsa para seleccionar — documentos, imágenes, audio o vídeo';
+  document.getElementById('formulario').scrollIntoView({behavior:'smooth'});
+}
+
+/* ---------- Consultar estado (DEMO) ---------- */
+function consultar(){
+  const code = document.getElementById('t-code').value.trim();
+  const out = document.getElementById('t-result');
+  if(!code){ out.textContent='Introduce el código de tu comunicación.'; return; }
+  out.innerHTML = 'En la versión final, aquí se mostraría el estado real del expediente asociado a <b>'+code+'</b> (recibida · en investigación · resuelta) y el historial de mensajes con el gestor.';
+}
+</script>
+</body>
+</html>
