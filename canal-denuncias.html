@@ -141,7 +141,7 @@
 </head>
 <body>
 
-<div class="demo-flag">Vista previa · Formulario en modo demostración (aún sin conectar al servidor)</div>
+<div class="demo-flag">Canal en fase de implantación · Estará disponible en breve</div>
 
 <header>
   <div class="wrap bar">
@@ -377,6 +377,8 @@ form.addEventListener('submit',(e)=>{
   if(!desc){ alert('Por favor, describe los hechos.'); return; }
   if(!consent){ alert('Debes aceptar la información sobre protección de datos.'); return; }
 
+  alert('El canal de denuncias está en fase de implantación y aún no está operativo. Estará disponible en breve. Disculpa las molestias.');
+  return;
   const {codigo, password} = generarDemo();
   document.getElementById('out-code').textContent = codigo;
   document.getElementById('out-pass').textContent = password;
